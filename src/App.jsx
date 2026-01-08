@@ -61,6 +61,13 @@ const CONTENT = {
       desc:
         "AI system converting motion data into 3D human animations for short animated films; combined ML with graphics/animation pipelines.",
       tags: ["ML", "3D", "Pipelines"],
+      type: "AI", 
+      images: [ 
+         "/projects/Motion to Animation System/1.jpg",
+      "/projects/Motion to Animation System/2.jpg",
+      "/projects/Motion to Animation System/3.jpg",
+    ], 
+
     },
     {
       name: "Intelligent Spelling Correction System",
@@ -68,6 +75,9 @@ const CONTENT = {
       desc:
         "Contextual NLP/DL spelling correction using sentence meaning rather than isolated words.",
       tags: ["NLP", "Deep Learning"],
+      type: "AI", 
+      images: [], 
+
     },
     {
       name: "Image-Based Puzzle Solver",
@@ -75,6 +85,9 @@ const CONTENT = {
       desc:
         "Computer vision system to analyze images and solve visual puzzles using image processing and pattern recognition.",
       tags: ["Computer Vision"],
+      type: "AI", 
+      images: [], // ما عنده واجهات → ما رح يظهر preview
+
     },
     {
       name: "Healthcare Chatbot System",
@@ -82,6 +95,18 @@ const CONTENT = {
       desc:
         "NLP-based chatbot integrated with a backend system to manage user interactions and responses.",
       tags: ["LLMs", "NLP", "Backend"],
+      type: "AI", 
+      images: [
+        "/projects/Healthcare Chatbot System/n.jpg",
+        "/projects/Healthcare Chatbot System/n1.jpg",
+        "/projects/Healthcare Chatbot System/n2.jpg",
+        "/projects/Healthcare Chatbot System/n3.jpg",
+        "/projects/Healthcare Chatbot System/n4.jpg",
+        "/projects/Healthcare Chatbot System/n5.jpg",
+
+
+      ], 
+
     },
     {
       name: "Taxi Driver Management System",
@@ -89,6 +114,26 @@ const CONTENT = {
       desc:
         "Mobile system with Flutter frontend and Laravel backend, connected via APIs.",
       tags: ["Flutter", "Laravel", "APIs"],
+      type: "WEB",
+      images: [
+        "/projects/Taxi Driver Management System/1.jpg",
+        "/projects/Taxi Driver Management System/2.jpg",
+        "/projects/Taxi Driver Management System/3.jpg",
+        "/projects/Taxi Driver Management System/4.jpg",
+        "/projects/Taxi Driver Management System/5.jpg",
+        "/projects/Taxi Driver Management System/6.jpg",
+        "/projects/Taxi Driver Management System/7.jpg",
+        "/projects/Taxi Driver Management System/8.jpg",
+        "/projects/Taxi Driver Management System/9.jpg",
+        "/projects/Taxi Driver Management System/10.jpg",
+        "/projects/Taxi Driver Management System/11.jpg",
+        "/projects/Taxi Driver Management System/12.jpg",
+        "/projects/Taxi Driver Management System/13.jpg",
+        "/projects/Taxi Driver Management System/14.jpg",
+
+
+      ], 
+
     },
     {
       name: "E-commerce Web Application",
@@ -96,6 +141,9 @@ const CONTENT = {
       desc:
         "Laravel e-commerce app with backend logic and database design.",
       tags: ["Laravel", "MySQL"],
+      type: "WEB",
+      images: [], // ما عنده واجهات → ما رح يظهر preview
+
     },
   ],
 
@@ -302,7 +350,21 @@ export default function App() {
     pauseMs: 850,
     betweenMs: 220,
   });
-
+  const [activeProject, setActiveProject] = useState(null);
+  const [activeImage, setActiveImage] = useState(0);
+  const [zoom, setZoom] = useState(false);
+  useEffect(() => {
+    if (!activeProject) return;
+  
+    const interval = setInterval(() => {
+      setActiveImage((prev) =>
+        (prev + 1) % activeProject.images.length
+      );
+    }, 3000);
+  
+    return () => clearInterval(interval);
+  }, [activeProject]);
+  
   const sections = useMemo(
     () => [
       { id: "about", label: "About" },
@@ -393,6 +455,7 @@ Open to opportunities
                     href="#projects"
                   >
                     View Projects
+                    
                   </a>
                   <a
                     className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/70 backdrop-blur-xl transition hover:border-white/15 hover:text-white"
@@ -501,36 +564,116 @@ Open to opportunities
                 <div className="flex items-end justify-between gap-4">
                   <div>
                     <h2 className="text-xl font-semibold">Projects</h2>
-                    <p className="mt-1 text-white/65">Minimal cards — no images, just substance.</p>
+                    {/* <p className="mt-1 text-white/65">Minimal cards — no images, just substance.</p> */}
                   </div>
                 </div>
 
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  {CONTENT.projects.map((p) => (
-                    <div
-                      key={p.name}
-                      className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-white/15 hover:shadow-glow"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="text-sm font-semibold">{p.name}</div>
-                        <div className="text-xs text-white/55">{p.year}</div>
-                      </div>
-                      <p className="mt-3 text-sm leading-relaxed text-white/70">{p.desc}</p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {p.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-white/70"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                {CONTENT.projects.map((p) => (
+  <div
+    key={p.name}
+    onClick={() => p.images?.length && setActiveProject(p)}
+    className={cn(
+      "group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition",
+      p.images?.length && "cursor-pointer hover:border-white/15 hover:shadow-glow",
+      p.type === "AI"
+      ? "hover:shadow-[0_0_40px_rgba(167,139,250,.25)]"
+      : "hover:shadow-[0_0_40px_rgba(45,212,191,.25)]"
+    )}
+  >
+    {/* 🔹 AI / WEB Badge */}
+    <span
+        className={cn(
+          "absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-medium",
+          p.type === "AI"
+            ? "bg-violet-400/10 text-violet-300 border border-violet-300/30"
+            : "bg-teal-400/10 text-teal-300 border border-teal-300/30"
+        )}
+      >
+        {p.type}
+      </span>
+    {p.images?.length > 0 && (
+      <img
+        src={p.images[0]}
+        alt={p.name}
+        className="mb-4 h-40 w-full rounded-xl object-cover border border-white/10"
+      />
+    )}
+
+    <div className="flex justify-between">
+      <div className="text-sm font-semibold">{p.name}</div>
+      <div className="text-xs text-white/55">{p.year}</div>
+    </div>
+
+    <p className="mt-3 text-sm text-white/70">{p.desc}</p>
+
+    <div className="mt-4 flex flex-wrap gap-2">
+      {p.tags.map((t) => (
+        <span
+          key={t}
+          className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-white/70"
+        >
+          {t}
+        </span>
+      ))}
+    </div>
+
+    {p.images?.length > 0 && (
+      <div className="mt-3 text-xs text-teal-300/80">
+        Click to preview interfaces →
+      </div>
+    )}
+  </div>
+))}
+
                 </div>
               </GlassCard>
             </motion.div>
+            {activeProject && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+    <div className="relative w-full max-w-4xl rounded-3xl bg-[#0B0F17] p-6">
+      <button
+        onClick={() => {
+          setActiveProject(null);
+          setActiveImage(0);
+        }}
+        className="absolute right-4 top-4 text-white/60 hover:text-white"
+      >
+        ✕
+      </button>
+
+      <h3 className="mb-4 text-lg font-semibold">
+        {activeProject.name}
+      </h3>
+
+      <img
+  src={activeProject.images[activeImage]}
+  onClick={() => setZoom(!zoom)}
+  className={cn(
+    "h-[420px] w-full rounded-xl border border-white/10 transition-transform duration-300 cursor-zoom-in",
+    zoom ? "scale-150 cursor-zoom-out" : "object-contain"
+  )}
+/>
+
+      <div className="mt-4 flex gap-3 overflow-x-auto">
+        {activeProject.images.map((img, i) => (
+          <img
+            key={i}
+            src={img}
+            onClick={() => { setActiveImage(i);   // 👈 هون
+            setZoom(false);   }}
+            className={cn(
+              "h-20 w-32 cursor-pointer rounded-lg object-cover border",
+              i === activeImage
+                ? "border-teal-300"
+                : "border-white/10 opacity-70 hover:opacity-100"
+            )}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+)}
 
             {/* Education */}
             <motion.div
@@ -604,6 +747,31 @@ Open to opportunities
                 </div>
               </GlassCard>
             </motion.div>
+            <a
+  className="
+    relative flex items-center gap-2 rounded-2xl border border-white/20 
+    bg-white/5 px-5 py-2 text-sm font-medium text-amber-300 backdrop-blur-md 
+    overflow-hidden group
+    transition-all duration-300
+    hover:text-white
+  "
+  href="/Hanaa_Alhoushan_CV.pdf"
+  download
+>
+  <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
+    📄
+  </span>
+  Download CV
+
+  {/* Glow خلف الزر */}
+  <span className="
+    absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/40 via-amber-300/20 to-amber-400/40
+    opacity-0 transition-opacity duration-300 group-hover:opacity-100
+    blur-xl
+  " />
+</a>
+
+
 
             <div className="pb-6 text-center text-xs text-white/45">
               Built with React • Glassmorphism • Motion (reduced-motion respected)
