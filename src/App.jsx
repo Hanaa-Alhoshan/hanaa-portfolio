@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { translations } from "./i18n";
 
 /** ---------- Content (from CV) ---------- */
 const CONTENT = {
@@ -8,51 +9,53 @@ const CONTENT = {
   email: "hanaasalem860@gmail.com",
   phone: "+963943646509",
   linkedin: "linkedin.com/in/hanaa-alhoshan-14a43024b/",
-  summary:
-    "Artificial Intelligence Engineer with hands-on experience in Machine Learning, Deep Learning, NLP, and Large Language Models (LLMs). Skilled in Python and AI integration, with additional backend experience for deploying intelligent solutions.",
-  roles: ["AI Engineer", "Machine Learning Engineer", "Data Analyst"],
+  summary: {
+    en: "Artificial Intelligence Engineer with hands-on experience in Machine Learning, Deep Learning, NLP, and Large Language Models (LLMs). Skilled in Python and AI integration, with additional backend experience for deploying intelligent solutions.",
+    ar: "مهندسة ذكاء اصطناعي ذات خبرة عملية في التعلم الآلي، التعلم العميق، معالجة اللغة الطبيعية، ونماذج اللغة الكبيرة. ماهرة بـ Python وتكامل الذكاء الاصطناعي، ولدي خبرة في تطوير الحلول الخلفية.",
+  },
+  roles: ["AI Engineer", "Machine Learning Engineer", "Data Analyst", "Laravel Developer"],
 
-  experience: [
-    {
-      title: "Teaching Assistant – Neural Networks",
-      org: "Damascus University",
-      time: "2025 – Present",
-      bullets: [
-        "Assist in teaching Neural Networks for undergraduates in the AI program.",
-        "Support students across ANNs, activation functions, backpropagation, loss, and training.",
-        "Contribute to practical sessions and academic support.",
-      ],
-    },
-    {
-      title: "AI Developer Trainee",
-      org: "Alrifai Consulting Group (Istanbul, Turkey)",
-      time: "Jul 2024 – 2025",
-      bullets: [
-        "Worked on LLMs, NLP, and ML/DL models.",
-        "Built prototypes for LLM-based chatbots to enhance customer interaction.",
-        "Implemented deep learning for text classification & sentiment analysis.",
-      ],
-    },
-    {
-      title: "Web Designer (Freelance, WordPress)",
-      org: "Syria Scope Travel",
-      time: "Oct 2024 – Present",
-      bullets: [
-        "Customized themes/plugins for responsive website.",
-        "Optimized performance & mobile responsiveness.",
-      ],
-    },
-    {
-      title: "Laravel Developer (Freelance)",
-      org: "Various",
-      time: "Feb 2025",
-      bullets: [
-        "Built barbershop management system (auth, roles, stock/service mgmt).",
-        "Designed MySQL schema & RESTful APIs.",
-        "Created Sawalfji: educational quiz app with points & challenges.",
-      ],
-    },
-  ],
+  // experience: [
+  //   {
+  //     title: "Teaching Assistant – Neural Networks",
+  //     org: "Damascus University",
+  //     time: "2025 – Present",
+  //     bullets: [
+  //       "Assist in teaching Neural Networks for undergraduates in the AI program.",
+  //       "Support students across ANNs, activation functions, backpropagation, loss, and training.",
+  //       "Contribute to practical sessions and academic support.",
+  //     ],
+  //   },
+  //   {
+  //     title: "AI Developer Trainee",
+  //     org: "Alrifai Consulting Group (Istanbul, Turkey)",
+  //     time: "Jul 2024 – 2025",
+  //     bullets: [
+  //       "Worked on LLMs, NLP, and ML/DL models.",
+  //       "Built prototypes for LLM-based chatbots to enhance customer interaction.",
+  //       "Implemented deep learning for text classification & sentiment analysis.",
+  //     ],
+  //   },
+  //   {
+  //     title: "Web Designer (Freelance, WordPress)",
+  //     org: "Syria Scope Travel",
+  //     time: "Oct 2024 – Present",
+  //     bullets: [
+  //       "Customized themes/plugins for responsive website.",
+  //       "Optimized performance & mobile responsiveness.",
+  //     ],
+  //   },
+  //   {
+  //     title: "Laravel Developer (Freelance)",
+  //     org: "Various",
+  //     time: "Feb 2025",
+  //     bullets: [
+  //       "Built barbershop management system (auth, roles, stock/service mgmt).",
+  //       "Designed MySQL schema & RESTful APIs.",
+  //       "Created Sawalfji: educational quiz app with points & challenges.",
+  //     ],
+  //   },
+  // ],
 
   projects: [
     {
@@ -147,18 +150,18 @@ const CONTENT = {
     },
   ],
 
-  education: [
-    {
-      degree: "Master’s in Artificial Intelligence (Ongoing)",
-      place: "Damascus University",
-      time: "2025 – Present",
-    },
-    {
-      degree: "BSc Information Technology Engineering – AI Specialization",
-      place: "Damascus University",
-      time: "2019 – 2024",
-    },
-  ],
+  // education: [
+  //   {
+  //     degree: "Master’s in Artificial Intelligence (Ongoing)",
+  //     place: "Damascus University",
+  //     time: "2025 – Present",
+  //   },
+  //   {
+  //     degree: "BSc Information Technology Engineering – AI Specialization",
+  //     place: "Damascus University",
+  //     time: "2019 – 2024",
+  //   },
+  // ],
 
   skills: [
     "Python",
@@ -343,8 +346,12 @@ function GlassCard({ children, className }) {
 }
 
 export default function App() {
+  const [lang, setLang] = useState("en");
+const t = translations[lang];
+const [theme, setTheme] = useState("dark"); // dark | light
+
   const reduceMotion = useReducedMotion();
-  const { text: roleText } = useTypewriterCycle(CONTENT.roles, {
+  const { text: roleText } = useTypewriterCycle(t.roles, {
     typeSpeed: 42,
     deleteSpeed: 26,
     pauseMs: 850,
@@ -367,13 +374,13 @@ export default function App() {
   
   const sections = useMemo(
     () => [
-      { id: "about", label: "About" },
-      { id: "skills", label: "Skills" },
-      { id: "projects", label: "Projects" },
-      { id: "education", label: "Education" },
-      { id: "contact", label: "Contact" },
+      { id: "about", label: t.about },
+      { id: "skills", label: t.skills },
+      { id: "projects", label: t.projects },
+      { id: "education", label: t.education },
+      { id: "contact", label: t.contact },
     ],
-    []
+    [lang]
   );
 
   const fadeUp = {
@@ -382,7 +389,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070A0F] text-white">
+    <div className="min-h-screen bg-[#070A0F] text-white"
+    dir={lang === "ar" ? "rtl" : "ltr"}>
       <div className="relative">
         <TechGlassBackground />
 
@@ -391,13 +399,14 @@ export default function App() {
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,.04)]" />
-              <span className="text-sm font-semibold tracking-wide">{CONTENT.name}</span>
+              <span className="text-sm font-semibold tracking-wide">{t.name}</span>
             </div>
 
             <nav className="hidden gap-6 text-sm text-white/70 sm:flex">
               {sections.map((s) => (
                 <a key={s.id} href={`#${s.id}`} className="hover:text-white transition-colors">
                   {s.label}
+
                 </a>
               ))}
             </nav>
@@ -406,8 +415,15 @@ export default function App() {
               href="#contact"
               className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/85 backdrop-blur-xl transition hover:border-white/15 hover:text-white hover:shadow-glow"
             >
-              Let’s talk
+              {t.letsTalk}
             </a>
+            <button
+  onClick={() => setLang(lang === "en" ? "ar" : "en")}
+  className="ml-3 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-1 text-xs text-white/80 hover:text-white"
+>
+  {lang === "en" ? "AR" : "EN"}
+</button>
+
           </div>
         </div>
 
@@ -424,11 +440,10 @@ export default function App() {
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/75 backdrop-blur-xl">
                   <span className="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_18px_rgba(45,212,191,.35)]" />
-Open to opportunities
-                </div>
+{t.openTo}                </div>
 
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-                  {CONTENT.name}
+                  {t.name}
                 </h1>
 
                 <div className="flex items-center gap-3">
@@ -446,23 +461,21 @@ Open to opportunities
                 </div>
 
                 <p className="max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
-                  {CONTENT.summary}
-                </p>
+                {CONTENT.summary[lang]}                </p>
 
                 <div className="flex flex-wrap gap-3 pt-1">
                   <a
                     className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/85 backdrop-blur-xl transition hover:border-white/15 hover:shadow-glow"
                     href="#projects"
                   >
-                    View Projects
+                    {t.viewProjects}
                     
                   </a>
                   <a
                     className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/70 backdrop-blur-xl transition hover:border-white/15 hover:text-white"
                     href={`mailto:${CONTENT.email}`}
                   >
-                    Email
-                  </a>
+{t.email}                  </a>
                 </div>
               </div>
             </motion.div>
@@ -481,41 +494,75 @@ Open to opportunities
               <GlassCard>
                 <div className="flex items-start justify-between gap-6">
                   <div className="space-y-2">
-                    <h2 className="text-xl font-semibold">About</h2>
+                  <h2 className="text-xl font-semibold">{t.about}</h2>
                     <p className="text-white/70 leading-relaxed">
-                      AI Engineer focused on building intelligent systems and practical ML/NLP solutions, with
-                      experience across LLM-based chatbots, deep learning classification, and backend integration.
+                      {t.aboutText}
                     </p>
                   </div>
                   <div className="hidden sm:block rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75 backdrop-blur-xl">
-                    <div className="font-medium text-white/85">{CONTENT.location}</div>
-                    <div className="text-white/60">Open to impactful AI work</div>
+                    <div className="font-medium text-white/85">{t.location}</div>
+                    <div className="text-white/60">{t.openToImpact}</div>
                   </div>
                 </div>
 
                 <div className="mt-6 grid gap-4">
-                  <div className="text-sm font-medium text-white/80">Highlights</div>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {CONTENT.experience.slice(0, 2).map((e) => (
-                      <div key={e.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                        <div className="text-sm font-semibold">{e.title}</div>
-                        <div className="mt-1 text-xs text-white/60">
-                          {e.org} • {e.time}
-                        </div>
-                        <ul className="mt-3 space-y-2 text-sm text-white/70">
-                          {e.bullets.slice(0, 2).map((b, i) => (
-                            <li key={i} className="flex gap-2">
-                              <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-teal-300/70" />
-                              <span>{b}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <div className="text-sm font-medium text-white/80">
+  {t.highlights}
+</div>
+
+<div className="grid gap-3 sm:grid-cols-2">
+  {t.highlights.map((h, i) => (
+    <div
+      key={i}
+      className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/70"
+    >
+      {h}
+    </div>
+  ))}
+</div>
+
+</div>
+
               </GlassCard>
             </motion.div>
+          <motion.div
+  id="experience"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.18 }}
+  variants={fadeUp}
+  transition={{ duration: 0.5 }}
+>
+  <GlassCard>
+    <h2 className="text-xl font-semibold mb-6">{t.experienceTitle}</h2>
+
+    <div className="space-y-4">
+      {t.experienceList.map((e) => (
+        <div
+          key={e.title}
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+          <div className="flex justify-between items-center">
+            <div className="text-sm font-semibold">{e.title}</div>
+            <div className="text-xs text-white/55">{e.time}</div>
+          </div>
+
+          <div className="text-sm text-white/70 mt-1">{e.org}</div>
+
+          <ul className="mt-3 space-y-2 text-sm text-white/70">
+            {e.bullets.map((b, i) => (
+              <li key={i} className="flex gap-2">
+                <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-teal-300/70" />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </GlassCard>
+</motion.div>
+
 
             {/* Skills */}
             <motion.div
@@ -529,12 +576,11 @@ Open to opportunities
               <GlassCard>
                 <div className="flex items-end justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-semibold">Skills</h2>
-                    <p className="mt-1 text-white/65">Core stack & tooling — recruiter friendly, concise.</p>
+                    <h2 className="text-xl font-semibold">{t.skills}</h2>
+                    <p className="mt-1 text-white/65">{t.skillsSubtitle}</p>
                   </div>
                   <div className="hidden sm:flex items-center gap-2 text-xs text-white/60">
                     <span className="h-1.5 w-1.5 rounded-full bg-violet-300/70" />
-                    Glass chips
                   </div>
                 </div>
 
@@ -563,7 +609,7 @@ Open to opportunities
               <GlassCard>
                 <div className="flex items-end justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-semibold">Projects</h2>
+                  <h2 className="text-xl font-semibold">{t.projects}</h2>
                     {/* <p className="mt-1 text-white/65">Minimal cards — no images, just substance.</p> */}
                   </div>
                 </div>
@@ -581,24 +627,16 @@ Open to opportunities
       : "hover:shadow-[0_0_40px_rgba(45,212,191,.25)]"
     )}
   >
-    {/* 🔹 AI / WEB Badge */}
-    <span
-        className={cn(
-          "absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-medium",
-          p.type === "AI"
-            ? "bg-violet-400/10 text-violet-300 border border-violet-300/30"
-            : "bg-teal-400/10 text-teal-300 border border-teal-300/30"
-        )}
-      >
-        {p.type}
-      </span>
+   
     {p.images?.length > 0 && (
       <img
         src={p.images[0]}
         alt={p.name}
         className="mb-4 h-40 w-full rounded-xl object-cover border border-white/10"
       />
+      
     )}
+    
 
     <div className="flex justify-between">
       <div className="text-sm font-semibold">{p.name}</div>
@@ -620,7 +658,7 @@ Open to opportunities
 
     {p.images?.length > 0 && (
       <div className="mt-3 text-xs text-teal-300/80">
-        Click to preview interfaces →
+{t.clickPreview}
       </div>
     )}
   </div>
@@ -685,9 +723,9 @@ Open to opportunities
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <GlassCard>
-                <h2 className="text-xl font-semibold">Education</h2>
+                <h2 className="text-xl font-semibold">{t.education}</h2>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {CONTENT.education.map((e) => (
+                  {t.educationList.map((e) => (
                     <div key={e.degree} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                       <div className="text-sm font-semibold">{e.degree}</div>
                       <div className="mt-1 text-sm text-white/70">{e.place}</div>
@@ -710,9 +748,9 @@ Open to opportunities
               <GlassCard className="mb-8">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                   <div>
-                    <h2 className="text-xl font-semibold">Contact</h2>
+                    <h2 className="text-xl font-semibold">{t.contact}</h2>
                     <p className="mt-1 text-white/65">
-                      Fastest way: email. Also available on LinkedIn.
+                      {t.contactSubtitle}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-3">
@@ -736,11 +774,11 @@ Open to opportunities
                 <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-white/70">
                   <div className="flex flex-wrap gap-x-6 gap-y-2">
                     <div>
-                      <span className="text-white/55">Phone: </span>
+                      <span className="text-white/55">{t.phone}</span>
                       <span className="text-white/85">{CONTENT.phone}</span>
                     </div>
                     <div>
-                      <span className="text-white/55">Location: </span>
+                      <span className="text-white/55">{t.location}</span>
                       <span className="text-white/85">{CONTENT.location}</span>
                     </div>
                   </div>
@@ -761,7 +799,7 @@ Open to opportunities
   <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">
     📄
   </span>
-  Download CV
+  {t.downloadCV}
 
   {/* Glow خلف الزر */}
   <span className="
@@ -772,10 +810,10 @@ Open to opportunities
 </a>
 
 
-
+{/* 
             <div className="pb-6 text-center text-xs text-white/45">
               Built with React • Glassmorphism • Motion (reduced-motion respected)
-            </div>
+            </div> */}
           </section>
         </main>
       </div>
