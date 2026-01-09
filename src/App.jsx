@@ -1,6 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { translations } from "./i18n";
+// ⬆️ فوق هنا مباشرة
+
+const GitHubIcon = ({ className = "w-5 h-5" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M12 0.5C5.73 0.5.5 5.74.5 12.02c0 5.11 3.29 9.44 7.86 10.97.57.1.78-.25.78-.55 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.27-1.7-1.27-1.7-1.04-.72.08-.71.08-.71 1.15.08 1.76 1.18 1.76 1.18 1.02 1.76 2.67 1.25 3.32.96.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12 0 1.53-.01 2.77-.01 3.15 0 .3.21.66.79.55 4.56-1.53 7.85-5.86 7.85-10.97C23.5 5.74 18.27.5 12 .5z" />
+  </svg>
+);
 
 /** ---------- Content (from CV) ---------- */
 const CONTENT = {
@@ -9,6 +22,8 @@ const CONTENT = {
   email: "hanaasalem860@gmail.com",
   phone: "+963943646509",
   linkedin: "linkedin.com/in/hanaa-alhoshan-14a43024b/",
+  github: "https://github.com/Hanaa-Alhoshan",
+
   summary: {
     en: "Artificial Intelligence Engineer with hands-on experience in Machine Learning, Deep Learning, NLP, and Large Language Models (LLMs). Skilled in Python and AI integration, with additional backend experience for deploying intelligent solutions.",
     ar: "مهندسة ذكاء اصطناعي ذات خبرة عملية في التعلم الآلي، التعلم العميق، معالجة اللغة الطبيعية، ونماذج اللغة الكبيرة. ماهرة بـ Python وتكامل الذكاء الاصطناعي، ولدي خبرة في تطوير الحلول الخلفية.",
@@ -59,46 +74,66 @@ const CONTENT = {
 
   projects: [
     {
-      name: "Motion to Animation System (Graduation Project)",
+      name: {
+        en: "Motion to Animation System (Graduation Project)",
+        ar: "نظام تحويل الحركة إلى رسوم متحركة (مشروع التخرج)",
+      },
       year: "2024",
-      desc:
-        "AI system converting motion data into 3D human animations for short animated films; combined ML with graphics/animation pipelines.",
+      desc: {
+        en: "AI system converting motion data into 3D human animations for short animated films; combined ML with graphics/animation pipelines.",
+        ar: "نظام ذكاء اصطناعي يحوّل بيانات الحركة إلى رسوم متحركة ثلاثية الأبعاد للأفلام القصيرة، مع دمج التعلم الآلي وخطوط معالجة الرسوم والتحريك.",
+      },
       tags: ["ML", "3D", "Pipelines"],
-      type: "AI", 
-      images: [ 
-         "/projects/Motion to Animation System/1.jpg",
-      "/projects/Motion to Animation System/2.jpg",
-      "/projects/Motion to Animation System/3.jpg",
-    ], 
-
+      type: "AI",
+      images: [
+        "/projects/Motion to Animation System/1.jpg",
+        "/projects/Motion to Animation System/2.jpg",
+        "/projects/Motion to Animation System/3.jpg",
+      ],
     },
+  
     {
-      name: "Intelligent Spelling Correction System",
+      name: {
+        en: "Intelligent Spelling Correction System",
+        ar: "نظام ذكي لتصحيح الأخطاء الإملائية",
+      },
       year: "2023",
-      desc:
-        "Contextual NLP/DL spelling correction using sentence meaning rather than isolated words.",
+      desc: {
+        en: "Contextual NLP/DL spelling correction using sentence meaning rather than isolated words.",
+        ar: "نظام تصحيح إملائي ذكي يعتمد على فهم سياق الجملة باستخدام معالجة اللغة الطبيعية والتعلم العميق.",
+      },
       tags: ["NLP", "Deep Learning"],
-      type: "AI", 
-      images: [], 
-
+      type: "AI",
+      images: [],
     },
+  
     {
-      name: "Image-Based Puzzle Solver",
+      name: {
+        en: "Image-Based Puzzle Solver",
+        ar: "نظام حل الألغاز اعتمادًا على الصور",
+      },
       year: "2023",
-      desc:
-        "Computer vision system to analyze images and solve visual puzzles using image processing and pattern recognition.",
+      desc: {
+        en: "Computer vision system to analyze images and solve visual puzzles using image processing and pattern recognition.",
+        ar: "نظام رؤية حاسوبية لتحليل الصور وحل الألغاز البصرية باستخدام معالجة الصور والتعرف على الأنماط.",
+      },
       tags: ["Computer Vision"],
-      type: "AI", 
-      images: [], // ما عنده واجهات → ما رح يظهر preview
-
+      type: "AI",
+      images: [],
     },
+  
     {
-      name: "Healthcare Chatbot System",
+      name: {
+        en: "Healthcare Chatbot System",
+        ar: "نظام شات بوت للرعاية الصحية",
+      },
       year: "2022–2023",
-      desc:
-        "NLP-based chatbot integrated with a backend system to manage user interactions and responses.",
+      desc: {
+        en: "NLP-based chatbot integrated with a backend system to manage user interactions and responses.",
+        ar: "شات بوت ذكي للرعاية الصحية يعتمد على معالجة اللغة الطبيعية ومتكامل مع نظام خلفي لإدارة تفاعل المستخدمين والردود.",
+      },
       tags: ["LLMs", "NLP", "Backend"],
-      type: "AI", 
+      type: "AI",
       images: [
         "/projects/Healthcare Chatbot System/n.jpg",
         "/projects/Healthcare Chatbot System/n1.jpg",
@@ -106,16 +141,19 @@ const CONTENT = {
         "/projects/Healthcare Chatbot System/n3.jpg",
         "/projects/Healthcare Chatbot System/n4.jpg",
         "/projects/Healthcare Chatbot System/n5.jpg",
-
-
-      ], 
-
+      ],
     },
+  
     {
-      name: "Taxi Driver Management System",
+      name: {
+        en: "Taxi Driver Management System",
+        ar: "نظام إدارة سائقي سيارات الأجرة",
+      },
       year: "2021–2022",
-      desc:
-        "Mobile system with Flutter frontend and Laravel backend, connected via APIs.",
+      desc: {
+        en: "Mobile system with Flutter frontend and Laravel backend, connected via APIs.",
+        ar: "نظام موبايل بواجهة Flutter وخلفية Laravel مع ربط كامل عبر واجهات برمجية (APIs).",
+      },
       tags: ["Flutter", "Laravel", "APIs"],
       type: "WEB",
       images: [
@@ -133,22 +171,25 @@ const CONTENT = {
         "/projects/Taxi Driver Management System/12.jpg",
         "/projects/Taxi Driver Management System/13.jpg",
         "/projects/Taxi Driver Management System/14.jpg",
-
-
-      ], 
-
+      ],
     },
+  
     {
-      name: "E-commerce Web Application",
+      name: {
+        en: "E-commerce Web Application",
+        ar: "تطبيق ويب للتجارة الإلكترونية",
+      },
       year: "2020–2021",
-      desc:
-        "Laravel e-commerce app with backend logic and database design.",
+      desc: {
+        en: "Laravel e-commerce app with backend logic and database design.",
+        ar: "تطبيق تجارة إلكترونية باستخدام Laravel يشمل منطق الخلفية وتصميم قاعدة البيانات.",
+      },
       tags: ["Laravel", "MySQL"],
       type: "WEB",
-      images: [], // ما عنده واجهات → ما رح يظهر preview
-
+      images: [],
     },
   ],
+  
 
   // education: [
   //   {
@@ -417,6 +458,21 @@ const [theme, setTheme] = useState("dark"); // dark | light
             >
               {t.letsTalk}
             </a>
+            <nav className="flex items-center">
+  {/* <a href="#contact">Let's Talk</a> */}
+
+  {/* 👇 GitHub هنا */}
+  <a
+    href={CONTENT.github}
+    target="_blank"
+    rel="noreferrer"
+    aria-label="GitHub"
+    className="ml-3 flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] p-2 text-white/70 transition hover:border-white/15 hover:text-white"
+  >
+    <GitHubIcon />
+  </a>
+</nav>
+
             <button
   onClick={() => setLang(lang === "en" ? "ar" : "en")}
   className="ml-3 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-1 text-xs text-white/80 hover:text-white"
@@ -476,6 +532,21 @@ const [theme, setTheme] = useState("dark"); // dark | light
                     href={`mailto:${CONTENT.email}`}
                   >
 {t.email}                  </a>
+<div className="mt-6 flex gap-3">
+  <a href={`mailto:${CONTENT.email}`}>Email</a>
+
+  {/* 👇 GitHub هنا */}
+  <a
+    href={CONTENT.github}
+    target="_blank"
+    rel="noreferrer"
+    aria-label="GitHub"
+    className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-white/70 backdrop-blur-xl transition hover:border-white/15 hover:text-white"
+  >
+    <GitHubIcon className="w-6 h-6" />
+  </a>
+</div>
+
                 </div>
               </div>
             </motion.div>
@@ -617,7 +688,7 @@ const [theme, setTheme] = useState("dark"); // dark | light
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {CONTENT.projects.map((p) => (
   <div
-    key={p.name}
+    key={p.name.en}
     onClick={() => p.images?.length && setActiveProject(p)}
     className={cn(
       "group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition",
@@ -639,11 +710,11 @@ const [theme, setTheme] = useState("dark"); // dark | light
     
 
     <div className="flex justify-between">
-      <div className="text-sm font-semibold">{p.name}</div>
-      <div className="text-xs text-white/55">{p.year}</div>
+      <div className="text-sm font-semibold">{p.name[lang]}</div>
+      <div className="text-xs text-white/55">{p.year[lang]}</div>
     </div>
 
-    <p className="mt-3 text-sm text-white/70">{p.desc}</p>
+    <p className="mt-3 text-sm text-white/70">{p.desc[lang]}</p>
 
     <div className="mt-4 flex flex-wrap gap-2">
       {p.tags.map((t) => (
@@ -681,7 +752,7 @@ const [theme, setTheme] = useState("dark"); // dark | light
       </button>
 
       <h3 className="mb-4 text-lg font-semibold">
-        {activeProject.name}
+        {activeProject.name[lang]}
       </h3>
 
       <img
